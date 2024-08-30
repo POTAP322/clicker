@@ -25,11 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private TextView scoreField;
     private ImageButton clickerBtn;
     private Button themeSwitchMenuBtn;
+    private Button restartBtn;
 
     private static final String SCORE_KEY = "score";
     private int score;
     private List<String> themes = new ArrayList<>(Arrays.asList("firstLevel","secondLevel"));
     private String curTheme;
+    private int restartClicks;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
         themeSwitchMenuBtn = findViewById(R.id.themeSwitchMenuBtn);
         clickerBtn = findViewById(R.id.clickerBtn);
+        restartBtn = findViewById(R.id.restartBtn);
 
 
 
@@ -69,6 +72,18 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 switchToTeThemeMenuActivity();
 
+            }
+        });
+
+        restartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                restartClicks +=1;
+                if ( restartClicks == 3){
+                    score = 0;
+                    scoreField.setText(String.valueOf(score));
+                    restartClicks = 0;
+                }
             }
         });
     }
@@ -100,4 +115,5 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ThemeSwitchActivity.class);
         startActivity(intent);
     }
+
 }
