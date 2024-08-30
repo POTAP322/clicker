@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
                 score+=1;
                 String curScore = String.valueOf(score);
                 scoreField.setText(curScore);
+                restartClicks =0;
             }
         });
 
