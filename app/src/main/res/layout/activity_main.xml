@@ -48,6 +48,8 @@
         android:id="@+id/restartBtn"
         android:layout_width="57dp"
         android:layout_height="58dp"
+        android:backgroundTint="#56C32A"
+
         android:text="↺"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

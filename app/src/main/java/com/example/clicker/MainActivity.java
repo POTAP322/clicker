@@ -2,6 +2,7 @@ package com.example.clicker;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.View;
@@ -28,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Button restartBtn;
 
     private static final String SCORE_KEY = "score";
-    private int score;
+    public static int score;
+    public static int scoreMultiplier = 1;
     private List<String> themes = new ArrayList<>(Arrays.asList("firstLevel","secondLevel"));
     private String curTheme;
     private int restartClicks;
@@ -61,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         clickerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                score+=1;
+                score+=1*scoreMultiplier;
                 String curScore = String.valueOf(score);
                 scoreField.setText(curScore);
                 restartClicks =0;
@@ -80,10 +82,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 restartClicks +=1;
+
+                if(restartClicks == 1){
+                    restartBtn.setBackgroundColor(Color.parseColor("#DBD128"));
+                }
+                if(restartClicks == 2){
+                    restartBtn.setBackgroundColor(Color.parseColor("#C52525"));
+                }
                 if ( restartClicks == 3){
                     score = 0;
                     scoreField.setText(String.valueOf(score));
                     restartClicks = 0;
+                    restartBtn.setBackgroundColor(Color.parseColor("#56C32A"));
                 }
             }
         });
