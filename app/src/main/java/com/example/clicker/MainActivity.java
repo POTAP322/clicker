@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -33,13 +34,15 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton clickerBtn;
     private Button themeSwitchMenuBtn;
     private Button restartBtn;
-    private RelativeLayout mainLayout;
+    private ConstraintLayout mainLayout;
 
     private static final String SCORE_KEY = "score";
     public static int score;
-    public static int scoreMultiplier = 1;
+    public static int scoreMultiplier = 100;
     public static int curThemeCode = 1;
     private Map<Integer, Integer> musicMap;
+    private Map<Integer, Integer> imageMap;
+    private Map<Integer, Integer> bgColourMap;
 
 
     private List<String> themes = new ArrayList<>(Arrays.asList("firstLevel","secondLevel"));
@@ -59,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
+        setContentView(R.layout.activity_main);
+
         if (savedInstanceState != null) {
             score = savedInstanceState.getInt(SCORE_KEY);
             String curScore = String.valueOf(score);
@@ -66,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         initializeMusicMap();
+        initializeImageMap();
+        initializeBGcolourMap();
 
 
         scoreField = findViewById(R.id.scoreField);
@@ -74,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         clickerBtn = findViewById(R.id.clickerBtn);
         restartBtn = findViewById(R.id.restartBtn);
 
-//        mainLayout = findViewById(R.id.main);
+        mainLayout = findViewById(R.id.main);
 
         mediaPlayer = MediaPlayer.create(this, musicMap.get(curThemeCode));
         mediaPlayer.setLooping(true);
@@ -122,6 +129,22 @@ public class MainActivity extends AppCompatActivity {
                     scoreField.setText(String.valueOf(score));
                     restartClicks = 0;
                     scoreMultiplier = 1;
+                    curThemeCode = 1;
+
+                    clickerBtn.setImageResource(imageMap.get(1));
+
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                    mediaPlayer = MediaPlayer.create(MainActivity.this, musicMap.get(curThemeCode));
+                    mediaPlayer.setLooping(true);
+                    mediaPlayer.start();
+
+                    mainLayout.setBackgroundColor(Color.parseColor("#2A8AA8"));
+
+
+                    mediaPlayer.setLooping(true);
+                    mediaPlayer.start();
+
                     restartBtn.setBackgroundColor(Color.parseColor("#56C32A"));
                 }
             }
@@ -149,10 +172,11 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
         boolean themeChanged = sharedPreferences.getBoolean("themeChanged", false);
         if (themeChanged) {
-            clickerBtn.setImageResource(R.drawable.star);
 
-//            int backgroundColor = sharedPreferences.getInt("backgroundColor", Color.WHITE);
-//            mainLayout.setBackgroundColor(backgroundColor);
+
+            clickerBtn.setImageResource(imageMap.get(curThemeCode));
+
+            mainLayout.setBackgroundColor(bgColourMap.get(curThemeCode));
 
             // Сбрасываем флаг после применения изменений
             SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -177,8 +201,24 @@ public class MainActivity extends AppCompatActivity {
         musicMap = new HashMap<>();
         musicMap.put(1, R.raw.mrbeast);
         musicMap.put(2, R.raw.sovietmarh);
-//        imageMap.put(3, R.raw.kok);
-//        imageMap.put(4, R.raw.babb);
+        musicMap.put(3,R.raw.caramellag);
+        musicMap.put(4,R.raw.mongol);
+
+    }
+    private void initializeImageMap(){
+        imageMap = new HashMap<>();
+        imageMap.put(1,R.drawable.mrbst);
+        imageMap.put(2,R.drawable.star);
+        imageMap.put(3,R.drawable.caramella);
+        imageMap.put(4,R.drawable.tugarin);
+    }
+    private void initializeBGcolourMap(){
+        bgColourMap = new HashMap<>();
+        bgColourMap.put(1,Color.parseColor("#2A8AA8"));
+        bgColourMap.put(2,Color.parseColor("#FF5733"));
+        bgColourMap.put(3,Color.parseColor("#FFB6C1"));
+        bgColourMap.put(4,Color.parseColor("#FFD700"));
+
     }
 
 

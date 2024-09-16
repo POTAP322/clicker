@@ -76,6 +76,17 @@ public class ThemeSwitchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MainActivity.scoreMultiplier = 3;
                 MainActivity.curThemeCode = 3;
+                stopMusic();
+                // Сохраняем изменения в SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("themeChanged", true);
+                editor.apply();
+
+                // Возвращаемся в MainActivity
+                Intent intent = new Intent(ThemeSwitchActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
         themeBTN3.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +94,17 @@ public class ThemeSwitchActivity extends AppCompatActivity {
             public void onClick(View view) {
                 MainActivity.scoreMultiplier = 4;
                 MainActivity.curThemeCode = 4;
+                stopMusic();
+                // Сохраняем изменения в SharedPreferences
+                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("themeChanged", true);
+                editor.apply();
+
+                // Возвращаемся в MainActivity
+                Intent intent = new Intent(ThemeSwitchActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
