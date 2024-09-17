@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String SCORE_KEY = "score";
     public static int score;
-    public static int scoreMultiplier = 100;
+    public static int scoreMultiplier = 1;
     public static int curThemeCode = 1;
     private Map<Integer, Integer> musicMap;
     private Map<Integer, Integer> imageMap;
